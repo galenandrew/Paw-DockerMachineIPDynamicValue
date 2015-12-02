@@ -1,38 +1,40 @@
-'use strict'
+(function() {
 
-// define dependancies
-var exec = require('child_process').execSync
+  // define dependencies
+  var exec = require('child_process').execSync;
 
-// define extension class
-var DockerMachineIPDynamicValue = function DockerMachineIPDynamicValue() {
-  this.title = function title() {
-    return 'Docker Machine'
-  }
+  // define extension class
+  var DockerMachineIPDynamicValue = function() {
+    this.ipAddress = 'localhost';
 
-  this.text = function text() {
-    return 'IP Address'
-  }
+    this.evaluate = function() {
 
-  this.evaluate = function evaluate() {
-    var dynamicValue;
+      try {
+        this.ipAddress = exec('docker-machine ip ' + this.dockerMachineName).toString();
+      } catch (err) {
+        console.log('ERROR getting docker machine IP address: ' + JSON.stringify(err, null, '\t'));
+      }
 
-    try {
-      dynamicValue = exec('docker-machine ip ' + this.dockerMachineName)
-    } catch (err) {
-      console.log('ERROR getting docker machine IP address: ' + JSON.stringify(err, null, '\t'));
-    } finally {
-      return dynamicValue.toString() || null;
-    }
+      return this.ipAddress;
 
-  }
+    };
 
-  return
-}
+    this.title = function() {
+      return 'Docker Machine IP Address';
+    };
 
-DockerMachineIPDynamicValue.identifier = 'com.galenandrew.DockerMachineIPDynamicValue'
-DockerMachineIPDynamicValue.title = 'Docker Machine IP Dynamic Value'
-DockerMachineIPDynamicValue.inputs = [
-  DynamicValueInput('dockerMachineName', 'Docker Machine Name', 'String')
-]
+    this.text = function() {
+      return this.ipAddress;
+    };
 
-egisterDynamicValueClass(DockerMachineIPDynamicValue)
+  };
+
+  DockerMachineIPDynamicValue.identifier = 'io.galenandrew.PawExtensions.DockerMachineIPDynamicValue';
+  DockerMachineIPDynamicValue.title = 'Docker Machine IP Dynamic Value';
+  DockerMachineIPDynamicValue.inputs = [
+    DynamicValueInput('dockerMachineName', 'Docker Machine Name', 'String')
+  ];
+
+  registerDynamicValueClass(DockerMachineIPDynamicValue);
+
+}).call(this);

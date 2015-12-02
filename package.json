@@ -1,0 +1,19 @@
+{
+  "name": "Paw-DockerMachineIPDynamicValue",
+  "version": "1.0.0",
+  "description": "Dynamic Value Paw Extension that returns the IP address for a given Docker Machine",
+  "author": "Andrew Turner <galen.turner@me.com>",
+  "license": "MIT",
+  "main": "DockerMachineIPDynamicValue.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/galenandrew/Paw-DockerMachineIPDynamicValue.git"
+  },
+  "bugs": {
+    "url": "https://github.com/galenandrew/Paw-DockerMachineIPDynamicValue/issues"
+  },
+  "homepage": "https://github.com/galenandrew/Paw-DockerMachineIPDynamicValue#readme"
+}
